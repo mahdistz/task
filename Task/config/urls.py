@@ -15,16 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from user.views import GitHubLogin, GoogleLogin,Home
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path("", Home.as_view(), name="home"),
     path('admin/', admin.site.urls),
     path('users/', include('user.urls')),
+    path("accounts/", include("allauth.urls")),
     # rest_framework
     path('api-auth/', include('rest_framework.urls')),
     # dj_rest_auth with using simple_jwt
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     # captcha
-    path('/captcha', include("captcha.urls")),
+    path('captcha/', include("captcha.urls")),
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += [
+    path('dj-rest-auth/github/', GitHubLogin.as_view(), name='github_login'),
+    path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login')
 ]

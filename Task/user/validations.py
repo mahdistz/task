@@ -25,3 +25,18 @@ class MobileNumberValidator(RegexValidator):
 
 # create an instance from the class
 mobile_number_validation = MobileNumberValidator()
+
+
+@deconstructible
+class TenDigitNumberValidator(RegexValidator):
+    # A rejection to check user input information
+    regex = r"^\d{10}$"
+
+    message = (
+        'Enter a valid number. This value may contain only numbers.'
+    )
+    flags = 0
+
+
+# create an instance from the class
+ten_digit_number_validation = TenDigitNumberValidator()
