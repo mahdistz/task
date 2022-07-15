@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     'captcha',
     'social_django',
 
+    'chartjs',
+
 ]
 
 SITE_ID = 1
