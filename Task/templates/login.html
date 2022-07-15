@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,11 +31,20 @@
 </head>
 <body>
 	
-	<div class="limiter">
+	<div class="limiter" >
 		<div class="container-login100" >
-			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="login100-form validate-form" method="POST">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="background-color: #bedef8">
+				<form class="login100-form validate-form" method="POST" action="">
                     {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                  <div class="alert alert-danger">
+                                       <strong>{{ error|escape }}</strong>
+                                  </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
 					<span class="login100-form-title p-b-49">
 						Login
 					</span>
@@ -47,20 +57,29 @@
 
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="pass" placeholder="Type your password">
+						<input class="input100" type="password" name="password" placeholder="Type your password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
-					
-					<div class="text-right p-t-8 p-b-31">
-						<a href="#">
-							Forgot password?
-						</a>
-					</div>
-					
+<br>
+					<div class="form-control" style="background-color: #d7e5f6">
+                        <label >Enter the text you see :</label><hr>
+                        {{form.captcha}}
+                        <a href="{% url 'login' %}" class="label-default">refresh</a>
+                    </div>
+<br>
+                    <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
+                                            <!-- Add a Remember me functionality -->
+                                            {{ form.remember_me }}
+                                            <label> Remember me</label>
+                                        </div>
+                                    </div>
+                                </div>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">
+							<button class="login100-form-btn" type="submit" name="login">
 								Login
 							</button>
 						</div>
@@ -74,24 +93,22 @@
 
 					<div class="flex-c-m">
 
-						<a href="#" class="login100-social-item bg2">
+						<a href="{% provider_login_url 'github' %}" class="login100-social-item bg2">
 							<i class="fa fa-github"></i>
 						</a>
 
-						<a href="#" class="login100-social-item bg3">
+						<a href="{% url 'social:begin' 'google-oauth2' %}" class="login100-social-item bg3">
 							<i class="fa fa-google"></i>
 						</a>
 					</div>
-
-					<div class="flex-col-c p-t-155">
-						<span class="txt1 p-b-17">
-							Or Sign Up Using
-						</span>
-
-						<a href="{% url 'new-register' %}" class="txt2">
-							Sign Up
+                    <hr>
+                    <center>
+					<div class="btn btn-default" >
+						<a href="{% url 'register' %}" class="btn btn-default" style="background-color: #bdd2f1">
+							Don't have an account yet? Go to signup
 						</a>
 					</div>
+                        </center>
 				</form>
 			</div>
 		</div>

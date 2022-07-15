@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
 from .validations import mobile_number_validation, is_valid_iran_national_code, ten_digit_number_validation
-from .managers import UserManager
 
 
 # Create your models here.
@@ -38,4 +38,9 @@ class Users(AbstractUser):
     def __str__(self):
         return f"{self.username}"
 
-    objects = UserManager()
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }

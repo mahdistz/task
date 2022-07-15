@@ -1,9 +1,10 @@
-{% extends '_base.html' %} {% load socialaccount %}
+{% extends '_base.html' %}
+{% load socialaccount %}
 
 {% block content %}
 
 <div class="container" style="text-align: center; padding-top: 10%;">
-  <h1>Django Social Login</h1>
+  <h1>Social Login</h1>
 
   <br /><br />
 
@@ -18,15 +19,13 @@
       <i class="fa fa-github fa-fw"></i>
       <span>Login with GitHub</span>
     </a>
-    <!-- GitHub button ends here -->
 
   <!-- Google button starts here -->
 
-  <h1>My Google Login Project</h1>
-  <a href="{% provider_login_url 'google' %}" class="btn btn-secondary">
+  <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-secondary">
       <i class="fa fa-google fa-fw"></i>
       <span>Login with Google</span></a>
-      <!-- Google button ends here -->
+
 
   {% endif %}
 </div>
